@@ -1,0 +1,5 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://jamesputradi:MjFiTgHQlMaHRyAu@sensure-db.rj1xc.mongodb.net/?retryWrites=true&w=majority&appName=sensure-db
+      database: sensure-db

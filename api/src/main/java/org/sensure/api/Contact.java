@@ -9,16 +9,21 @@ public class Contact {
     @Id
     private String id;
     private String name;
+    private String organisation;
     private String email;
-    private String message;
+    private String phone;
+    private String comments;
 
-    // Constructors
+    // Default constructor
     public Contact() {}
 
-    public Contact(String name, String email, String message) {
+    // Parameterized constructor
+    public Contact(String name, String organisation, String email, String phone, String comments) {
         this.name = name;
+        this.organisation = organisation;
         this.email = email;
-        this.message = message;
+        this.phone = phone;
+        this.comments = comments;
     }
 
     // Getters and Setters
@@ -34,16 +39,28 @@ public class Contact {
     public void setName(String name) {
         this.name = name;
     }
+    public String getOrganisation() {
+        return organisation;
+    }
+    public void setOrganisation(String organisation) {
+        this.organisation = organisation;
+    }
     public String getEmail() {
         return email;
     }
     public void setEmail(String email) {
         this.email = email;
     }
-    public String getMessage() {
-        return message;
+    public String getPhone() {
+        return phone;
     }
-    public void setMessage(String message) {
-        this.message = message;
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+    public String getComments() {
+        return comments;
+    }
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 }
