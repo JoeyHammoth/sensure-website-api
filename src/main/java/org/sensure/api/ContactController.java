@@ -11,49 +11,43 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/contacts")
 public class ContactController {
 
+    private static final String ALLOWED_ORIGIN = "https://sensure-react-website.vercel.app";
+
     @Autowired
     private ContactRepo contactRepository;
 
-    @CrossOrigin(origins = "https://sensure-react-website.vercel.app", maxAge = 3600)
+    @CrossOrigin(
+            origins = ALLOWED_ORIGIN,
+            allowedHeaders = "*",
+            methods = {RequestMethod.POST, RequestMethod.OPTIONS, RequestMethod.GET},
+            maxAge = 3600
+    )
     @PostMapping
     public ResponseEntity<String> submitContact(@RequestBody Contact contact) {
         try {
             contactRepository.save(contact);
-            return ResponseEntity.ok()
-                    .header("Access-Control-Allow-Origin", "https://sensure-react-website.vercel.app")
-                    .header("Access-Control-Allow-Methods", "POST, OPTIONS")
-                    .header("Access-Control-Allow-Headers", "*")
-                    .body("Contact saved successfully");
+            return ResponseEntity.ok("Contact saved successfully");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .header("Access-Control-Allow-Origin", "https://sensure-react-website.vercel.app")
                     .body("Error saving contact: " + e.getMessage());
         }
     }
 
-    @CrossOrigin(origins = "https://sensure-react-website.vercel.app", maxAge = 3600)
+    // This is essential for handling preflight OPTIONS requests
+    @CrossOrigin(
+            origins = ALLOWED_ORIGIN,
+            allowedHeaders = "*",
+            methods = {RequestMethod.POST, RequestMethod.OPTIONS, RequestMethod.GET},
+            maxAge = 3600
+    )
     @RequestMapping(method = RequestMethod.OPTIONS)
-    public ResponseEntity<String> handleOptions() {
-        return ResponseEntity.ok()
-                .header("Access-Control-Allow-Origin", "https://sensure-react-website.vercel.app")
-                .header("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
-                .header("Access-Control-Allow-Headers", "*")
-                .header("Access-Control-Max-Age", "3600")
-                .body("CORS preflight request handled successfully");
-    }
-
-    @CrossOrigin(origins = "https://sensure-react-website.vercel.app", maxAge = 3600)
-    @GetMapping
-    public ResponseEntity<String> testEndpoint() {
-        return ResponseEntity.ok()
-                .header("Access-Control-Allow-Origin", "https://sensure-react-website.vercel.app")
-                .body("API is working");
+    public ResponseEntity<Void> handleOptions() {
+        return ResponseEntity.ok().build();
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleException(Exception e) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .header("Access-Control-Allow-Origin", "https://sensure-react-website.vercel.app")
                 .body("Server error: " + e.getMessage());
     }
 }
