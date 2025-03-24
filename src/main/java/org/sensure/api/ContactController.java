@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/contacts")
-@CrossOrigin(origins = "https://sensure-react-website.vercel.app")
+@CrossOrigin(origins = "*")
 public class ContactController {
 
     @Autowired
